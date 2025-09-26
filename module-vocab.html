@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vocabulary</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{min-height:100vh;background:url('background.jpg') no-repeat center/cover;display:flex;flex-direction:column;}
+    header{position:fixed;top:0;left:0;width:100%;padding:20px 100px;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(255,255,255,0.1);backdrop-filter:blur(15px);
+      border-bottom:2px solid rgba(255,255,255,0.25);}
+    .logo{font-size:2em;color:#fff;}
+    .navigation a{margin-left:40px;color:#fff;text-decoration:none;font-weight:500;}
+    main{flex:1;padding:140px 100px 50px;}
+    .module-wrapper{background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.25);
+      border-radius:20px;backdrop-filter:blur(20px);padding:2rem;color:#162938;}
+    .module-wrapper h1{margin-bottom:1rem;}
+    .vocab-list{list-style:none;padding:0;}
+    .vocab-list li{padding:.8rem;border-bottom:1px solid rgba(0,0,0,0.1);}
+    .term{font-weight:600;color:#162938;}
+    .definition{color:#333;margin-top:.3rem;}
+  </style>
+</head>
+<body>
+  <header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+      <a href="dashboard.html">Home</a>
+      <a href="add-course.html">Add Course</a>
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+    </nav>
+  </header>
+  <main>
+    <div class="module-wrapper">
+      <h1>Vocabulary</h1>
+      <ul class="vocab-list">
+        <li><span class="term">Loading...</span></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

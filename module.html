@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Module</title>
+  <style>
+    *{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+    body{
+      min-height:100vh;
+      background:url('background.jpg') no-repeat;
+      background-size:cover;
+      background-position:center;
+      display:flex; flex-direction:column;
+    }
+
+    header{
+      position:fixed; top:0; left:0; width:100%;
+      padding:20px 100px; display:flex; justify-content:space-between; align-items:center;
+      background:rgba(255,255,255,0.1); backdrop-filter:blur(15px);
+      border-bottom:2px solid rgba(255,255,255,0.25); z-index:99;
+    }
+    .logo{font-size:2em; color:#fff;}
+    .navigation a{margin-left:40px; font-size:1.1em; color:#fff; text-decoration:none; position:relative;}
+    .navigation a::after{content:''; position:absolute; left:0; bottom:-6px; width:100%; height:3px;
+      background:#fff; transform:scaleX(0); transform-origin:right; transition:.5s;}
+    .navigation a:hover::after{transform-origin:left; transform:scaleX(1);}
+    .btnLogout{margin-left:40px; padding:.5rem 1rem; border:2px solid #fff; border-radius:6px; background:transparent; color:#fff;}
+    .btnLogout:hover{background:#fff; color:#162938;}
+
+    main{flex:1; padding:140px 100px 50px; color:#162938;}
+
+    .module-wrapper{
+      background:rgba(255,255,255,0.15);
+      border:2px solid rgba(255,255,255,0.25);
+      border-radius:20px;
+      backdrop-filter:blur(20px);
+      padding:2rem;
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
+      animation:fadeInUp .6s ease;
+    }
+    .module-wrapper h1{font-size:2em; margin-bottom:1rem;}
+    .actions{display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;}
+    .btn{
+      background:#162938; color:#fff; padding:.8rem 1.2rem;
+      border:none; border-radius:6px; font-weight:600;
+      text-decoration:none; cursor:pointer; transition:.3s;
+    }
+    .btn:hover{background:#fff; color:#162938; border:2px solid #162938;}
+    @keyframes fadeInUp{from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);}}
+  </style>
+</head>
+<body>
+  <header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+      <a href="dashboard.html">Home</a>
+      <a href="add-course.html">Add Course</a>
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+      <button class="btnLogout">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="module-wrapper">
+      <h1 id="moduleTitle">Module</h1>
+      <p id="moduleDesc" style="margin-bottom:1rem; color:#333;"></p>
+      <div class="actions">
+        <a class="btn" id="textPage">📖 Lesson Text</a>
+        <a class="btn" id="vocabPage">📚 Vocabulary</a>
+        <a class="btn" id="quizPage">📝 Quiz</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get("course");
+    const moduleId = urlParams.get("module");
+
+    const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+    const course = courses[courseId];
+    const moduleTitle = course?.modules[moduleId] || "Module Not Found";
+
+    document.getElementById("moduleTitle").textContent = moduleTitle;
+    document.getElementById("moduleDesc").textContent = `Part of course: ${course.title}`;
+
+    document.getElementById("textPage").href = `module-text.html?course=${courseId}&module=${moduleId}`;
+    document.getElementById("vocabPage").href = `module-vocab.html?course=${courseId}&module=${moduleId}`;
+    document.getElementById("quizPage").href = `module-quiz.html?course=${courseId}&module=${moduleId}`;
+
+    document.querySelector('.btnLogout').addEventListener('click',()=>{
+      localStorage.removeItem('username');
+      window.location.href='index.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson Text</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{
+      min-height:100vh;
+      background:url('background.jpg') no-repeat center/cover;
+      display:flex;flex-direction:column;
+    }
+    header{position:fixed;top:0;left:0;width:100%;padding:20px 100px;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(255,255,255,0.1);backdrop-filter:blur(15px);
+      border-bottom:2px solid rgba(255,255,255,0.25);}
+    .logo{font-size:2em;color:#fff;}
+    .navigation a{margin-left:40px;color:#fff;text-decoration:none;font-weight:500;}
+    main{flex:1;padding:140px 100px 50px;color:#162938;}
+    .module-wrapper{background:rgba(255,255,255,0.15);
+      border:2px solid rgba(255,255,255,0.25);border-radius:20px;
+      backdrop-filter:blur(20px);box-shadow:0 0 20px rgba(0,0,0,0.3);
+      padding:2rem;}
+    .module-wrapper h1{font-size:2em;margin-bottom:1rem;}
+    .lesson-text{line-height:1.7;font-size:1.1em;color:#333;white-space:pre-wrap;}
+  </style>
+</head>
+<body>
+  <header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+      <a href="dashboard.html">Home</a>
+      <a href="add-course.html">Add Course</a>
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+    </nav>
+  </header>
+  <main>
+    <div class="module-wrapper">
+      <h1>Lesson Text</h1>
+      <div class="lesson-text">
+        Loading module content...
+      </div>
+    </div>
+  </main>
+</body>
+</html>

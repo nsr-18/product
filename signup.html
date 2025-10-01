@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Create Account</title>
+</head>
+<body>
+
+
+ <h1>Sign Up</h1>
+
+
+ <p>New here? Let’s fix that.</p>
+
+
+ <form onsubmit="register(event)">
+   <label for="name">First Name</label><br>
+   <input type="text" id="text" placeholder="Nitya"><br><br>
+
+
+   <label for="password">Password</label><br>
+   <input type="password" id="password" placeholder="make it hard to guess"><br><br>
+
+
+   <label for="email">Email</label><br>
+   <input type="email" id="email" placeholder="you@somewhere.com"><br><br>
+   <button type="submit">Create Account</button>
+ </form>
+
+
+ <p>Already have an account? <a href="login.html">Log in instead</a></p>
+
+
+ <script>
+   function register(event) {
+     event.preventDefault();
+     const user = document.getElementById('username').value;
+     const pass = document.getElementById('password').value;
+     const email = document.getElementById('email').value;
+
+
+     if(!user||!pass||!email) {
+       alert("Missing info. No miracles.");
+       return;
+     }
+     alert(`Congrats ${user}, you’re in`);
+     window.location.href = 'home.html';
+   }
+ </script>
+
+
+</body>
+</html>

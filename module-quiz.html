@@ -1,300 +1,43 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Module Quiz</title>
-<style>
-    /* Existing Styles */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-    body{min-height:100vh;background:url('background.jpg') no-repeat center/cover;display:flex;flex-direction:column;}
-    header{position:fixed;top:0;left:0;width:100%;padding:20px 100px;
-        display:flex;justify-content:space-between;align-items:center;
-        background:rgba(255,255,255,0.1);backdrop-filter:blur(15px);
-        border-bottom:2px solid rgba(255,255,255,0.25);}
-    .logo{font-size:2em;color:#fff;}
-    .navigation a{margin-left:40px;color:#fff;text-decoration:none;font-weight:500;}
-    main{flex:1;padding:140px 100px 50px; display: flex; justify-content: center; align-items: flex-start;} /* Centered main content */
-    .module-wrapper{
-        background:rgba(255,255,255,0.15);
-        border:2px solid rgba(255,255,255,0.25);
-        border-radius:20px;
-        backdrop-filter:blur(20px);
-        padding:2rem;
-        box-shadow:0 0 40px rgba(0,0,0,0.5); /* Stronger Shadow */
-        width: 600px; /* Max width for beauty */
-    }
-    .module-wrapper h1{margin-bottom:1.5rem; color:#162938; text-align: center;}
-    .question{font-size:1.3em;margin-bottom:1.5rem;color:#162938; font-weight: 600; text-align: center;}
-    .btn{
-        display:block;width:100%;margin:10px 0;padding:12px;
-        border-radius:8px;border:2px solid #162938;background:#fff;color:#162938;
-        cursor:pointer;font-weight:600;transition:.3s, transform 0.1s;
-        text-align: left; /* Better for reading options */
-    }
-    .btn:not([disabled]):hover{background:#162938;color:#fff; transform: translateY(-2px);}
-    .btn:disabled{cursor: not-allowed; opacity: 0.8;}
-    .btn.correct{background:#5cb85c;border-color:#5cb85c; color: white;} /* Green */
-    .btn.incorrect{background:#d9534f;border-color:#d9534f; color: white;} /* Red */
-    
-    /* New Button Styles */
-    #button-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        gap: 10px;
-    }
-    .quiz-control-btn{
-        padding: 12px 20px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 700;
-        transition: 0.3s;
-        flex-grow: 1;
-        display: none; /* Controlled by JS */
-    }
-    #nextBtn{
-        background:#162938;
-        color:#fff;
-    }
-    #nextBtn:hover{background:#294d68;}
-
-    #retakeBtn, #moveOnBtn{
-        background:#f0ad4e;
-        color:#162938;
-        display: none;
-    }
-    #retakeBtn:hover, #moveOnBtn:hover{background:#d58e39;}
-
-    /* Score Display */
-    .score-display {
-        text-align: center;
-        margin-top: 15px;
-        font-size: 1.1em;
-        color: #162938;
-        font-weight: 700;
-    }
-
-    /* Mastery Feedback Styles */
-    #mastery-feedback {
-        text-align: center;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-weight: 700;
-        font-size: 1.4em;
-    }
-    .mastery-full { background: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; } /* Green for Success */
-    .mastery-partial { background: #fcf8e3; color: #8a6d3b; border: 1px solid #faebcc; } /* Yellow for Partial */
-    .mastery-fail { background: #f2dede; color: #a94442; border: 1px solid #ebccd1; } /* Red for Retry */
-</style>
+  <title>Quiz</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h2 class="logo">Logo</h2>
-    <nav class="navigation">
-      <a href="dashboard.html">Home</a>
-      <a href="add-course.html">Add Course</a>
-      <a href="#">Profile</a>
-      <a href="#">Settings</a>
-    </nav>
-  </header>
-  <main>
-    <div class="module-wrapper">
-      <h1>Module Quiz</h1>
-      <div class="question" id="question">Loading question...</div>
-      <div id="answers"></div>
-      <div id="button-container">
-            <button class="quiz-control-btn" id="nextBtn">Next Question</button>
-            <button class="quiz-control-btn" id="retakeBtn">Retake Quiz</button>
-            <button class="quiz-control-btn" id="moveOnBtn">Move On ➡️</button>
-      </div>
-      <div id="mastery-feedback"></div>
-    </div>
-  </main>
+  <header><h1 id="moduleTitle">Quiz</h1></header>
+  <div class="container" id="quizContainer">Loading quiz...</div>
+
+  <script src="modules.js"></script>
   <script>
-const quizQuestions = [
-    {
-        question: "Which of the following is a key characteristic of a **sound** deductive argument?",
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get("course");
+    const moduleId = urlParams.get("module");
+    const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+    const course = courses[courseId];
+    document.getElementById("moduleTitle").textContent = course.modules[moduleId];
+
+  
+    const questions = [
+      {
+        question: "Sample Q1?",
         answers: [
-            { text: "Its premises are true, but its conclusion is only probably true.", isCorrect: false },
-            { text: "Its premises are true, and its conclusion **must** be true.", isCorrect: true },
-            { text: "It is persuasive, regardless of the truth of its premises.", isCorrect: false },
-            { text: "Its conclusion is based on a strong sample of empirical evidence.", isCorrect: false }
+          { text: "Option 1", correct: false },
+          { text: "Option 2", correct: true }
         ]
-    },
-    {
-        question: "Identify the logical fallacy: 'The new school curriculum is terrible. I know this because the former superintendent—who opposed it—said it would lead to disaster.'",
+      },
+      {
+        question: "Sample Q2?",
         answers: [
-            { text: "Ad Hominem", isCorrect: false },
-            { text: "Straw Man", isCorrect: false },
-            { text: "**Appeal to Authority** (when the authority is not an expert in the relevant field)", isCorrect: true },
-            { text: "Hasty Generalization", isCorrect: false }
+          { text: "A", correct: true },
+          { text: "B", correct: false }
         ]
-    },
-    {
-        question: "Consider the following syllogism: *All birds are vertebrates. A penguin is a bird. Therefore, a penguin is a vertebrate.* This argument is:",
-        answers: [
-            { text: "Valid but unsound", isCorrect: false },
-            { text: "Invalid but sound", isCorrect: false },
-            { text: "**Valid and Sound**", isCorrect: true },
-            { text: "A non sequitur", isCorrect: false }
-        ]
-    },
-    {
-        question: "A **necessary condition** for an event *E* is a condition *C* such that:",
-        answers: [
-            { text: "If *C* is present, then *E* must be present.", isCorrect: false },
-            { text: "If *C* is absent, then *E* must be present.", isCorrect: false },
-            { text: "If *E* is present, then *C* must be absent.", isCorrect: false },
-            { text: "If *E* is present, then *C* **must** be present.", isCorrect: true }
-        ]
-    }
-];
+      }
+    ];
 
-// --- Quiz Logic ---
-const questionElement = document.getElementById("question");
-const answerButtonsElement = document.getElementById("answers");
-const nextButton = document.getElementById("nextBtn");
-const retakeButton = document.getElementById("retakeBtn");
-const moveOnButton = document.getElementById("moveOnBtn");
-const feedbackElement = document.getElementById("mastery-feedback");
-
-let currentQuestionIndex = 0;
-let score = 0;
-let randomizedQuestions = [];
-
-/** Shuffles the quiz questions using the Fisher-Yates algorithm. */
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function startQuiz() {
-    currentQuestionIndex = 0;
-    score = 0;
-    // 1. Shuffle the questions at the start of the quiz
-    randomizedQuestions = shuffleArray([...quizQuestions]);
-    
-    nextButton.innerHTML = "Next Question";
-    showQuestion();
-}
-
-function showQuestion() {
-    resetState();
-    let currentQuestion = randomizedQuestions[currentQuestionIndex];
-    let questionNo = currentQuestionIndex + 1;
-    questionElement.innerHTML = `${questionNo}. ${currentQuestion.question}`;
-
-    currentQuestion.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.innerHTML = answer.text;
-        button.classList.add("btn");
-        if (answer.isCorrect) {
-            button.dataset.isCorrect = answer.isCorrect;
-        }
-        button.addEventListener("click", selectAnswer);
-        answerButtonsElement.appendChild(button);
-    });
-}
-
-function resetState() {
-
-    nextButton.style.display = "none";
-    retakeButton.style.display = "none";
-    moveOnButton.style.display = "none";
-    feedbackElement.style.display = "none";
-    feedbackElement.className = '';
-    feedbackElement.innerHTML = '';
-    
-   
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-    }
-}
-
-function selectAnswer(e) {
-    const selectedBtn = e.target;
-    const isCorrect = selectedBtn.dataset.isCorrect === "true";
-
-    if (isCorrect) {
-        selectedBtn.classList.add("correct");
-        score++;
-    } else {
-        selectedBtn.classList.add("incorrect");
-    }
-
-    Array.from(answerButtonsElement.children).forEach(button => {
-        if (button.dataset.isCorrect === "true") {
-            button.classList.add("correct");
-        }
-        button.disabled = true;
-    });
-
-
-    nextButton.style.display = "block";
-}
-
-function showScore() {
-    resetState();
-    const totalQuestions = quizQuestions.length;
-    let masteryText = '';
-    let masteryClass = '';
-    
-    if (score === totalQuestions) {
-        
-        masteryText = `⭐ Full Mastery! (${score}/${totalQuestions}). You earned all the mastery points! 🏆`;
-        masteryClass = 'mastery-full';
-        moveOnButton.style.display = "block";
-        moveOnButton.innerHTML = "Awesome! Move On 🚀";
-    } else if (score === totalQuestions - 1) {
-        masteryText = `👍 Partial Mastery (${score}/${totalQuestions}). You earned some mastery points. You can still move on!`;
-        masteryClass = 'mastery-partial';
-        retakeButton.style.display = "block";
-        moveOnButton.style.display = "block";
-    } else {
-        
-        masteryText = `⚠️ Score: ${score}/${totalQuestions}. Please retake to earn mastery points.`;
-        masteryClass = 'mastery-fail';
-        retakeButton.style.display = "block";
-        moveOnButton.style.display = "block";
-    
-    questionElement.innerHTML = `Quiz Complete!`;
-    feedbackElement.innerHTML = masteryText;
-    feedbackElement.classList.add(masteryClass);
-    feedbackElement.style.display = "block";
-}
-}
-
-function handleNextButton() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < randomizedQuestions.length) {
-        showQuestion();
-    } else {
-        showScore();
-    }
-}
-
-
-
-
-nextButton.addEventListener("click", handleNextButton);
-
-
-retakeButton.addEventListener("click", () => {
-    
-    retakeButton.style.display = "none";
-    moveOnButton.style.display = "none";
-    startQuiz(); 
-});
-
-moveOnButton.addEventListener("click", () => {
-    location.href = "course-detail.html";
-});
-startQuiz();
+    runQuiz(questions, `${courseId}-${moduleId}`);
   </script>
 </body>
 </html>

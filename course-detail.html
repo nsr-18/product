@@ -4,200 +4,129 @@
   <meta charset="UTF-8">
   <title>Course Detail</title>
   <style>
-    *{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
-    body{
-      min-height:100vh;
-      background:url('background.jpg') no-repeat;
-      background-size:cover;
-      background-position:center;
-      display:flex;
-      flex-direction:column;
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background: #f8f9fa;
+      color: #222;
     }
 
-    header{
-      position:fixed; top:0; left:0; width:100%;
-      padding:20px 100px;
-      display:flex; justify-content:space-between; align-items:center;
-      background:rgba(255,255,255,0.1);
-      backdrop-filter:blur(15px);
-      border-bottom:2px solid rgba(255,255,255,0.25);
-      z-index:99;
-    }
-    .logo{font-size:2em; color:#fff;}
-    .navigation a{
-      margin-left:40px; font-size:1.1em; color:#fff;
-      text-decoration:none; font-weight:500; position:relative;
-    }
-    .navigation a::after{
-      content:''; position:absolute; left:0; bottom:-6px; width:100%; height:3px;
-      background:#fff; border-radius:5px; transform:scaleX(0); transform-origin:right;
-      transition:transform .5s;
-    }
-    .navigation a:hover::after{transform-origin:left; transform:scaleX(1);}
-    .btnLogout{margin-left:40px; padding:.5rem 1rem; border:2px solid #fff; border-radius:6px;
-      background:transparent; color:#fff; cursor:pointer;}
-    .btnLogout:hover{background:#fff; color:#162938;}
-
-    main{flex:1; padding:140px 100px 50px; color:#162938;}
-
-    .course-header, .section{
-      background:rgba(255,255,255,0.15);
-      border:2px solid rgba(255,255,255,0.25);
-      border-radius:20px;
-      backdrop-filter:blur(20px);
-      box-shadow:0 0 20px rgba(0,0,0,0.25);
-      padding:2rem;
-      margin-bottom:2rem;
-      animation:fadeInUp .6s ease;
+    .course-header {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
 
-    .course-header h1{font-size:2.2em; margin-bottom:.5rem;}
-    .course-header .info{color:#444; font-size:1.1em;}
-
-    .section h2{margin-bottom:1rem; font-size:1.5em;}
-
-    .btn{
-      background:#162938; color:#fff; padding:.7rem 1.4rem;
-      border:none; border-radius:6px; font-weight:600;
-      text-decoration:none; cursor:pointer; display:inline-block;
-      transition:.3s;
+    h1 {
+      font-size: 1.75rem;
     }
-    .btn:hover{background:#fff; color:#162938; border:2px solid #162938;}
 
-
-    .modules-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap:1.5rem;
+    .info {
+      margin-top: 0.5rem;
+      color: #666;
     }
-    .module-card{
-      background:rgba(255,255,255,0.2);
-      border:2px solid rgba(255,255,255,0.25);
-      border-radius:15px;
-      padding:1.5rem;
-      backdrop-filter:blur(15px);
-      cursor:pointer;
-      transition:.3s;
-    }
-    .module-card h3{margin-bottom:.5rem;}
-    .module-card:hover{transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.3);}
-    .no-content{font-style:italic; color:#666;}
 
-    @keyframes fadeInUp{from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);}}
+    .section {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .section h2 {
+      margin-bottom: 1rem;
+    }
+
+    .no-content {
+      font-style: italic;
+      color: #999;
+    }
+
+    .btn {
+      background: #2c7be5;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: #195cb2;
+    }
+
+    ul.modules {
+      list-style: none;
+      padding-left: 1rem;
+    }
+
+    ul.modules li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h2 class="logo">Logo</h2>
-    <nav class="navigation">
-      <a href="dashboard.html">Home</a>
-      <a href="add-course.html">Add Course</a>
-      <a href="#">Profile</a>
-      <a href="#">Settings</a>
-      <button class="btnLogout">Logout</button>
-    </nav>
-  </header>
+  <div class="course-header" id="courseHeader">
+    <h1>Loading course...</h1>
+    <p class="info"></p>
+  </div>
 
-  <main>
-    <div class="course-header" id="courseHeader">
-      <h1>Loading course...</h1>
-      <p class="info"></p>
-    </div>
+  <div class="section" id="courseContent">
+    <h2>Uploaded Content</h2>
+    <div id="contentBlock" class="no-content">No content uploaded yet.</div>
+    <a href="upload-content.html" class="btn">Upload Content</a>
+  </div>
 
-    <div class="section" id="courseModules">
-      <h2>Generated Modules</h2>
-      <div id="modulesBlock" class="no-content">Modules not generated yet.</div>
-    </div>
-
-    <div class="section" id="courseContent">
-      <h2>Uploaded Content</h2>
-      <div id="contentBlock" class="no-content">No content uploaded yet.</div>
-      <a href="upload-content.html" class="btn" id="uploadBtn">Upload Content</a>
-    </div>
-  </main>
+  <div class="section" id="courseModules">
+    <h2>Generated Modules</h2>
+    <div id="modulesBlock" class="no-content">Modules not generated yet.</div>
+  </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    // Get the course ID from the URL
     const courseId = urlParams.get('id');
-    // Check for a success flag from the upload page
-    const uploadSuccess = urlParams.get('upload_success');
-    
-    // ... inside the <script> tag of course-detail.html ...
-
-    // Load data
-    const courses = JSON.parse(localStorage.getItem('courses') || '[]');
-    // We must find the course by ID (index) since localStorage stores an array
-    const course = courses[courseId]; 
 
     const courseHeader = document.getElementById('courseHeader');
     const contentBlock = document.getElementById('contentBlock');
     const modulesBlock = document.getElementById('modulesBlock');
-    const uploadBtn = document.getElementById('uploadBtn');
 
-    // ... showUploadMessage function remains the same ...
-    function showUploadMessage() {
-        if (uploadSuccess === 'true') {
-            // Display an alert for immediate user feedback
-            alert('🎉 Content uploaded successfully! The material is now visible below.');
-            
-            // Clean the URL by removing the success flag for a cleaner look
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?id=${courseId}`;
-            window.history.replaceState({ path: newUrl }, '', newUrl);
-        }
-    }
+    const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+    const course = courses[courseId];
 
-
-    // --- Data Rendering Logic ---
-    if(!course){
-      courseHeader.innerHTML = '<h1>Course Not Found</h1><p class="info">Invalid course ID.</p>';
+    if (!course) {
+      courseHeader.innerHTML = '<h1>Course Not Found</h1>';
+      document.body.innerHTML += '<p>There is no course data for this ID.</p>';
     } else {
       courseHeader.querySelector('h1').textContent = course.title;
-      courseHeader.querySelector('.info').textContent = `${course.duration} • ${course.complexity}`;
-      
-      // Update the Upload button link to carry the course ID
-      // This is the CRITICAL STEP: ensuring the ID is in the link
-      uploadBtn.href = `upload-content.html?id=${courseId}`; 
+      courseHeader.querySelector('.info').textContent = `${course.duration} · ${course.complexity}`;
 
-      // --- RENDER MODULES ---
-      // (This section should be before content render since you wanted modules first)
-      if(course.modules && course.modules.length > 0){
-        modulesBlock.classList.remove('no-content');
-        const grid = document.createElement('div');
-        grid.className = 'modules-grid';
-
-        course.modules.forEach((m,i)=>{
-          const card = document.createElement('a');
-          card.className = 'module-card';
-          // Using a simple index for the module link for now
-          card.href = `module.html?course=${courseId}&module=${i}`; 
-          // Assuming modules have a title and summary structure for better display
-          card.innerHTML = `<h3>Module ${i+1}: ${m.title || 'Untitled Module'}</h3><p>Topics: ${m.summary || 'Click to view'}</p>`;
-          grid.appendChild(card);
-        });
-        modulesBlock.innerHTML='';
-        modulesBlock.appendChild(grid);
-      }
-      
-      // --- RENDER UPLOADED CONTENT ---
-      // Check for the 'rawContent' property saved by the upload page
-      if(course.rawContent && course.rawContent.trim() !== ''){
+      if (course.content && course.content.trim() !== '') {
         contentBlock.classList.remove('no-content');
-        
-        // Display the raw content saved from the previous page
-        contentBlock.style.whiteSpace = 'pre-wrap'; // Preserves line breaks
-        contentBlock.textContent = course.rawContent; 
+        contentBlock.textContent = course.content.substring(0, 200) + '...';
       }
-      
-      // Show the success message after the course content has loaded
-      showUploadMessage();
-    }
-    // ... rest of the script (like logout listener) remains the same ...
 
-    document.querySelector('.btnLogout').addEventListener('click',()=>{
-      localStorage.removeItem('username');
-      window.location.href='index.html';
-    });
-</script>
+      if (course.modules && course.modules.length > 0) {
+        modulesBlock.classList.remove('no-content');
+        const list = document.createElement('ul');
+        list.className = 'modules';
+
+        course.modules.forEach((m, i) => {
+          const item = document.createElement('li');
+          item.textContent = `Module ${i + 1}: ${m}`;
+          list.appendChild(item);
+        });
+
+        modulesBlock.innerHTML = '';
+        modulesBlock.appendChild(list);
+      }
+    }
+  </script>
 </body>
 </html>

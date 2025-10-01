@@ -4,377 +4,155 @@
     <meta charset="UTF-8">
     <title>Upload Course Content</title>
     <style>
-     *{
-      margin:0;
-      padding:0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: url('background.jpg') no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
-    header{
-      position: fixed;
-      top:0;
-      left:0;
-      width: 100%;
-      padding: 20px 100px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 99; 
-    }
-    .logo{
-      font-size: 2em;
-      color: #fff;
-      user-select: none;
-    
-    }
-    .navigation a{
-      position: relative;
-      font-size: 1.1em;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      margin-left: 40px;
-    
-    }
-    .navigation a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100px;
-      height: 3px;
-      background-color: #fff;
-      border-radius: 5px;
-      transform-origin: right;
-      transform: scaleX(0);
-      transition: transform .5s;
-    }
-       .navigation a:hover::after{
-      transform-origin: left;
-      transform: scaleX(1);
-    }
-    .navigation .btnLogout{
-      width: 130px;
-      height: 50px;
-      background: transparent;
-      border: 2px solid #fff;
-      color:#fff;
-      outline: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-      margin-left: 40px;
-  
-    }
-    .navigation .btnLogout:hover{
-      background: #fff;
-      color: #162938;
-
-    }
-
-    
-    main {
-        display: flex;
-        flex-direction: column; 
-        align-items: center; 
-        max-width: 90%; 
-        padding-top: 60px; 
-    }
-    .back-link {
-            align-self: flex-start; 
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-
-            margin-bottom: 20px;
-            padding: 8px 15px;
-            
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            
-            text-decoration: none;
-            color: #fff;
-            font-weight: 500;
-            
-            transition: all 0.3s;
-            cursor: pointer;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+        body {
+            font-family: sans-serif;
+            margin: 2rem;
+            background: #fcfcfc;
+            color: #222;
+            line-height: 1.6;
         }
 
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #fff;
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
         }
-    main h1, main p {
-        color: #ffffff;
-         text-shadow: 1px 1px 2px #37276d;
-        text-align: center;
-        margin-bottom: 10px;
-        z-index: 10;
-    }
-    main p {
-        max-width: 500px;
-        font-size: 0.9em;
-        margin-bottom: 25px;
-    }
 
-  
-    .wrapper {
-      position: relative;
-      width: 550px;
-      height: 440px;
-      background: transparent;
-      border: 2px solid rgba(255,255,255,0.5);
-      border-radius:20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 0 30px rgba(0,0,0,0.5);
-      display: flex;
-      justify-content:center;
-      align-items:center;
-      overflow: hidden;
-  
-    }
-
-    #uploadForm {
-        display: flex;
-        flex-direction: column;
-    }
-    #uploadForm label {
-        color: #162938;
-        font-weight: 600;
-        margin-top: 15px;
-        margin-bottom: 5px;
-    }
-    #uploadForm input[type="file"],
-    #uploadForm input[type="url"],
-    #uploadForm textarea {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 100%;
-        margin-bottom: 15px;
-        resize: vertical;
-        display: flex;
-        justify-content:center;
-        align-items:center;
-        overflow: hidden;
-    }
-    #uploadForm button[type="submit"] {
-        width: 100%;
-        height: 45px;
-        background: #162938;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1em;
-        font-weight: 500;
-        margin-top: 10px;
-    }
-    .file-preview {
-        font-size: 0.9em;
-        color: #555;
-        margin-top: -10px;
-        margin-bottom: 15px;
-    }
-    .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            text-align: center;
-            display: none; 
+        form {
+            max-width: 600px;
         }
-        .message-box button {
-            margin-top: 15px;
-            background: #162938;
+
+        label {
+            display: block;
+            margin-top: 1.5rem;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="url"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+        }
+
+        input[type="file"] {
+            background: #fff;
+        }
+
+        .upload-group {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .file-preview {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: #eee;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        button {
+            margin-top: 2rem;
+            padding: 0.7rem 1.2rem;
+            background: #2c7be5;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            border-radius: 4px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-            .navigation {
-                display: none;
-            header .logo {
-                width: 100%;
-                text-align: center;
-            }
-            main {
-                max-width: 95%;
-                padding: 10px;
-                padding-top: 80px;
-            }
+        button:hover {
+            background: #195cb2;
         }
-      }
     </style>
 </head>
 <body>
-    <header>
-        <h2 class="logo">Logo</h2>
-        <nav class="navigation">
-            <a href="dashboard.html">Home</a>
-            <a href="add-course.html">Add Course</a>
-            <a href="#">Profile</a>
-            <a href="#">Settings</a>
-            <button class="btnLogout">Logout</button>
-        </nav>
-    </header>
+    <h1>Upload Learning Materials</h1>
+    <p>You can throw a whole bunch of content at us — notes, slides, videos, links — and we'll turn it into a structured course later. This is your raw material zone.</p>
 
-    <main> 
-      <a href="course-detail.html" class="back-link" aria-label="Go back to Course Details">
-            &larr; Back to Course Details
-        </a>
-        <h1>Upload Learning Materials</h1>
-        <p>You can throw a whole bunch of content at us — notes, slides, videos, links — and we'll turn it into a structured course later. This is your raw material zone.</p>
+    <form id="uploadForm">
+        <label for="rawText">Paste Notes or Written Content</label>
+        <textarea id="rawText" name="rawText" rows="6" placeholder="Copy and paste anything here…"></textarea>
 
-        <div class="wrapper">
-            <form id="uploadForm">
-                <label for="rawText">Paste Notes or Written Content</label>
-                <textarea id="rawText" name="rawText" rows="6" placeholder="Copy and paste anything here…"></textarea>
-
-                <div class="upload-group">
-                    <label for="fileUpload">Upload Files (PDF, DOCX, PNG, JPG)</label>
-                    <input type="file" id="fileUpload" name="files" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" multiple>
-                    <div id="filePreview" class="file-preview"></div>
-                </div>
-
-                <label for="videoLink">YouTube or Website Link</label>
-                <input type="url" id="videoLink" name="videoLink" placeholder="https://youtube.com/watch?v=... or https://any.site">
-
-                <button type="submit">Upload Content</button>
-            </form>
+        <div class="upload-group">
+            <label for="fileUpload">Upload Files (PDF, DOCX, PNG, JPG)</label>
+            <input type="file" id="fileUpload" name="files" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" multiple>
+            <div id="filePreview" class="file-preview"></div>
         </div>
-    </main>
-        <div id="messageBox" class="message-box">
-        <p id="messageText"></p>
-        <button onclick="document.getElementById('messageBox').style.display='none'">OK</button>
-    </div>
 
-   <script>
-    const form = document.getElementById('uploadForm');
-    const fileInput = document.getElementById('fileUpload');
-    const filePreview = document.getElementById('filePreview');
-    const messageBox = document.getElementById('messageBox');
-    const messageText = document.getElementById('messageText');
+        <label for="videoLink">YouTube or Website Link</label>
+        <input type="url" id="videoLink" name="videoLink" placeholder="https://youtube.com/watch?v=... or https://any.site">
 
-    
-    fileInput.addEventListener('change', () => {
-        filePreview.innerHTML = '';
-        if (fileInput.files.length === 0) {
-            filePreview.textContent = 'No files selected.';
-            return;
-        }
-        let totalSizeKB = 0;
-        Array.from(fileInput.files).forEach(file => {
-            const sizeKB = Math.round(file.size / 1024);
-            totalSizeKB += sizeKB;
-            const info = document.createElement('div');
-            info.textContent = `• ${file.name} (${sizeKB} KB)`;
-            filePreview.appendChild(info);
+        <button type="submit">Upload Content</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileUpload');
+        const filePreview = document.getElementById('filePreview');
+
+        // File preview logic
+        fileInput.addEventListener('change', () => {
+            filePreview.innerHTML = '';
+            if (fileInput.files.length === 0) {
+                filePreview.textContent = 'No files selected.';
+                return;
+            }
+            Array.from(fileInput.files).forEach(file => {
+                const info = document.createElement('div');
+                info.textContent = `• ${file.name} (${Math.round(file.size / 1024)} KB)`;
+                filePreview.appendChild(info);
+            });
         });
-        
-        const summary = document.createElement('p');
-        summary.style.marginTop = '5px';
-        summary.style.fontWeight = 'bold';
-        summary.textContent = `Total: ${fileInput.files.length} file(s), approx ${totalSizeKB} KB.`;
-        filePreview.appendChild(summary);
-    });
 
-   
-    // CRITICAL: Get the Course ID from the URL parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const courseIdToUpdate = urlParams.get('id');
+        // Form submit logic
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
 
-    // ... fileInput.addEventListener('change', ...) remains the same ...
+            const text = document.getElementById('rawText').value.trim();
+            const link = document.getElementById('videoLink').value.trim();
+            const files = fileInput.files;
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-
-        const text = document.getElementById('rawText').value.trim();
-        const link = document.getElementById('videoLink').value.trim();
-        const files = fileInput.files;
-
-        if (!courseIdToUpdate) {
-            showMessage('Error: Cannot upload. Missing Course ID in URL.', 'Error');
-            return;
-        }
-
-        // 1. Validation Check:
-        if (!text && files.length === 0 && !link) {
-            showMessage('Please add some content—text, files, or a link—before uploading!', 'Error');
-            return;
-        }
-
-        // Disable the button and show loading state
-        const submitButton = e.target.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Uploading... Please wait.';
-
-        // --- Simulated Upload Process ---
-        setTimeout(() => {
-            const isSuccess = true; 
-            
-            submitButton.disabled = false;
-            submitButton.textContent = 'Upload Content';
-
-            if (isSuccess) {
-                // 2. Aggregate all uploaded data into a single string for display
-                const rawContentString = 
-                    (text ? `\n--- Pasted Notes ---\n${text.substring(0, 1000)}` : '') + 
-                    (link ? `\n--- Video/Web Link ---\n${link}` : '') + 
-                    (files.length > 0 ? `\n--- Uploaded Files ---\n${Array.from(files).map(f => f.name).join(', ')}` : '');
-
-                // 3. Save Content to LocalStorage
-                const currentCourses = JSON.parse(localStorage.getItem('courses') || '[]');
-                
-                // Ensure the index is a number for array access
-                const courseIndex = parseInt(courseIdToUpdate); 
-                
-                if (currentCourses[courseIndex]) {
-                    // This is the property that course-detail.html will read
-                    currentCourses[courseIndex].rawContent = rawContentString; 
-                    localStorage.setItem('courses', JSON.stringify(currentCourses));
-                }
-
-                // 4. Redirect back with the success flag
-                window.location.href = `course-detail.html?id=${courseIdToUpdate}&upload_success=true`; 
-            } else {
-                // Failure: Show error message
-                showMessage('Upload failed due to a simulated server error. Please try again.', 'Failure');
+            if (!text && files.length === 0 && !link) {
+                alert("Please add some content — text, files, or a link.");
+                return;
             }
 
-        }, 2000); // 2 second delay for simulation
-    });
+            // Create a FormData object to send data to the server
+            const formData = new FormData();
+            formData.append('rawText', text);
+            formData.append('videoLink', link);
+            
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
 
-    // ... showMessage function remains the same ...
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-    
-    function showMessage(message, type) {
-        messageText.innerHTML = `<strong>${type}:</strong> ${message}`;
-        messageBox.style.display = 'block';
-    }
-    
-</script>
+                if (response.ok) {
+                    alert('Content uploaded successfully!');
+                    // Redirect or clear form after successful upload
+                    // window.location.href = 'course-detail.html';
+                    form.reset();
+                    filePreview.innerHTML = '';
+                } else {
+                    const error = await response.json();
+                    alert(`Upload failed: ${error.message}`);
+                }
+            } catch (error) {
+                alert('An error occurred. Please check the server.');
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html>

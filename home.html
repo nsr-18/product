@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Learning Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { display: flex; min-height: 100vh; background: #f4f4f4; }
+
+    #sidebar {
+      width: 240px;
+      background: #1f1f1f;
+      color: #fff;
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    #sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+
+    #sidebar h2 {
+      margin-bottom: 1rem;
+    }
+
+    #sidebar ul {
+      list-style: none;
+    }
+
+    #sidebar li {
+      margin: 0.75rem 0;
+    }
+
+    #sidebar a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    #sidebar a:hover {
+      color: #fff;
+    }
+
+    #main {
+      flex: 1;
+      padding: 2rem;
+      position: relative;
+    }
+
+    #toggleSidebar {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: #ddd;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .course-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .course-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .empty-message {
+      color: #888;
+      margin-top: 2rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h2>📚 My Learning</h2>
+    <ul>
+      <li><a href="dashboard.html">🏠 Dashboard</a></li>
+      <li><a href="add-course.html">➕ Add Course</a></li>
+      <li><a href="#">👤 Profile</a></li>
+      <li><a href="#">⚙️ Settings</a></li>
+      <li><a href="#">ℹ️ About Us</a></li>
+    </ul>
+  </div>
+
+  <div id="main">
+    <button id="toggleSidebar">☰</button>
+    <h1>Welcome Back 👋</h1>
+    <p>Your courses will show up here. Dive into a course or start something new.</p>
+
+    <div class="course-grid" id="courseGrid"></div>
+    <p id="noCourses" class="empty-message" style="display: none;">You don't have any courses yet. Start by creating one.</p>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+    toggleSidebar.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    const courseGrid = document.getElementById('courseGrid');
+    const noCoursesMsg = document.getElementById('noCourses');
+
+    const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+
+    function renderCourses() {
+      courseGrid.innerHTML = '';
+
+      if (courses.length === 0) {
+        noCoursesMsg.style.display = 'block';
+      } else {
+        noCoursesMsg.style.display = 'none';
+        courses.forEach((course, index) => {
+          const card = document.createElement('a');
+          card.className = 'course-card';
+          card.href = `course.html?id=${index}`;
+          card.innerHTML = `<h3>${course.title}</h3><p>${course.duration} - ${course.complexity}</p>`;
+          courseGrid.appendChild(card);
+        });
+      }
+
+
+      const addCard = document.createElement('a');
+      addCard.className = 'course-card';
+      addCard.href = 'add-course.html';
+      addCard.innerHTML = '<h3>➕ Add New Course</h3><p>Create a new course from your notes</p>';
+      courseGrid.appendChild(addCard);
+    }
+
+    renderCourses();
+  </script>
+</body>
+</html>

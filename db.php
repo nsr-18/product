@@ -1,10 +1,15 @@
 <?php
-$host = "localhost";
-$db   = "user_auth";
-$user = "root";
-$pass = "";
+// db.php
+$servername = "localhost";
+$username = "root"; // e.g., "root"
+$password = ""; // e.g., "" for XAMPP/WAMP default
+$dbname = "your_database_name";
 
-$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
-  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Progress Bar</title>
+        <style>
+            /* --- General Body Styles for Centering --- */
+            body {
+                font-family: Arial, sans-serif;
+                background-image: url("background.jpg"); 
+
+                color: #333;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            /* --- Progress Bar Styles --- */
+
+            /* This is the main container for positioning the SVG */
+            .skill {
+                /* Set the size to be the same as the SVG + its stroke-width */
+                width: 160px;
+                height: 160px;
+                position: relative;
+            }
+
+            /* The outer background ring for the neumorphic effect */
+            .outer {
+                height: 100%; /* Take full height of .skill */
+                width: 100%; /* Take full width of .skill */
+                border-radius: 50%;
+                /* Padding is REMOVED to keep it a clean 160x160 circle */
+                /* padding: 20px; <--- REMOVED */
+                box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                            -6px -6px 10px -1px rgba(255,255,255,0.7);
+                display: flex; /* Added for centering .inner */
+                justify-content: center; /* Added for centering .inner */
+                align-items: center; /* Added for centering .inner */
+            }
+
+            /* The inner content area */
+            .inner {
+                /* Size should now be based on .outer (160px) minus the visual gap you want */
+                height: 120px; 
+                width: 120px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* Adjusted inner shadow for a better visual */
+                box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+                            inset -4px -4px 6px -1px rgba(255,255,255,0.7);
+            }
+
+            #number {
+                font-weight: 600;
+                color: #555;
+            }
+
+            /* SVG Circle Styling */
+            svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                /* Z-index to ensure the SVG circle is behind the inner content */
+                z-index: -1; 
+            }
+
+            circle {
+                fill: none;
+                stroke: url(#GradientColor);
+                /* Match stroke-width to the visual gap between .outer and .inner */
+                /* (160px - 120px) / 2 = 20px on each side. The radius is r=70, so 70 * 2 = 140. */
+                /* The difference is 160 - 140 = 20. The stroke-width is 20, which is correct */
+                stroke-width: 20px; 
+                /* Circumference is 2 * pi * r. With r=70, C is approx 439.82. 440 is fine. */
+                stroke-dasharray: 440; 
+                /* Set initial offset to fill the circle */
+                stroke-dashoffset: 440; 
+                transition: stroke-dashoffset 0.25s ease-out;
+                transform: rotate(-90deg); /* Start the progress from the top */
+                transform-origin: 50% 50%; /* Ensure rotation is around the center */
+            }
+
+            /* The background circle for visual depth */
+            svg circle:nth-child(1) {
+                stroke: #e0e0e0; /* A slightly lighter color for the background circle */
+                stroke-dashoffset: 0;
+                stroke-width: 20px; /* Explicitly set to ensure it's on the same path */
+            }
+
+            /* The progress circle */
+            svg circle:nth-child(2) {
+                stroke: url(#GradientColor);
+                stroke-width: 20px;
+            }
+
+        </style>       
+    </head>
+    <body>
+
+        <div class="skill">
+            <div class="outer">
+                <div class="inner">
+                    <div id="number">
+                        0%
+                    </div> 
+                </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                <defs>
+                    <linearGradient id="GradientColor">
+                        <stop offset="0%" stop-color="#9d67c9" />
+                        <stop offset="100%" stop-color="#121282" />
+                    </linearGradient>
+                </defs>
+                <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+                <circle id="progressCircle" cx="80" cy="80" r="70" stroke-linecap="round" />
+            </svg>
+        </div>
+        
+        <script>
+            let numberElement = document.getElementById("number");
+            let progressCircle = document.getElementById("progressCircle");
+            let counter = 0;
+            let target = 65; // The desired percentage you want to stop at
+            const circumference = 440; // Approx 2 * pi * 70
+
+            let interval = setInterval(() => {
+                if(counter >= target){ // Use >= for robustness
+                    clearInterval(interval);
+                } else {
+                    counter += 1;
+                    numberElement.innerHTML = counter + "%";
+                    
+                    // Calculate the stroke-dashoffset for the new percentage
+                    // offset = C - (P / 100) * C
+                    let offset = circumference - (counter / 100) * circumference;
+                    progressCircle.style.strokeDashoffset = offset;
+                }
+            }, 25);
+        </script>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-// server.js
+import OpenAI from "openai";
 import express from "express";
 import dotenv from "dotenv";
 
@@ -8,7 +8,9 @@ console.log("👉 server.js loaded");
 
 const app = express();
 app.use(express.json());
-
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
 app.post("/generate", async (req, res) => {
   const { rawContent } = req.body;
 

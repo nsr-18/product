@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Learning Dashboard</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('background.jpg') no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    header{
+      position: fixed;
+      top:0;
+      left:0;
+      width: 100%;
+      padding: 20px 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 99; 
+    }
+    .logo{
+      font-size: 2em;
+      color: #fff;
+      user-select: none;
+    
+    }
+    .navigation a{
+      position: relative;
+      font-size: 1.1em;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 40px;
+    
+    }
+    .navigation a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 5px;
+      transform-origin: right;
+      transform: scaleX(0);
+      transition: transform .5s;
+    }
+    .navigation a:hover::after{
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+    .navigation .btnLogout{
+      width: 130px;
+      height: 50px;
+      background: transparent;
+      border: 2px solid #fff;
+      color:#fff;
+      outline: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-left: 40px;
+  
+    }
+    .navigation .btnLogout:hover{
+      background: #fff;
+      color: #162938;
+
+    }
+  
+    main{
+      flex:1;
+      padding: 120px 100px 50px; 
+      color:#162938;
+    }
+   .profile-section, .settings-section { 
+    position: relative;
+      width: 800px;
+      height: 400px;
+      background:  rgba(255,255,255,0.6);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius:20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      display: flex;
+      justify-content:center;
+      align-items:center;
+      overflow: hidden;
+}
+        h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #5cb85c; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; }
+        button:hover { background-color: #4cae4c; }
+        #color-preview { width: 40px; height: 40px; border: 1px solid #000; display: inline-block; vertical-align: middle; margin-left: 10px; border-radius: 50%; }
+    </style>
+
+
+</head>
+<body>
+  <header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+      <a href="dashboard.html">Home</a>
+      <a href="add-course.html">Add Course</a>
+      <a href="profile.html">Profile</a>
+      <a href="contact.html">Contact</a>
+      <a href="/logout" class="btnLogout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h1>User Profile & Settings 👤</h1>
+
+    <section class="profile-section">
+        <h3>Profile Details</h3>
+        <form id="profileForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="bio">Bio (About Me):</label>
+            <textarea id="bio" name="bio" rows="4"></textarea>
+
+            <button type="submit" id="saveProfileBtn">💾 Save Profile Details</button>
+            <p id="profileMessage" style="color: green; margin-top: 10px;"></p>
+        </form>
+    </section>
+
+    <hr>
+
+    <section class="settings-section">
+        <h3>App Settings</h3>
+        <form id="settingsForm">
+            <label for="themeColor">Choose a Primary Color:</label>
+            <input type="color" id="themeColor" name="themeColor" value="#5cb85c">
+            <span id="color-preview"></span>
+            
+            <label for="theme">Theme Preference:</label>
+            <select id="theme" name="theme">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+            </select>
+
+            <button type="submit" id="saveSettingsBtn">🎨 Apply & Save Settings</button>
+            <p id="settingsMessage" style="color: green; margin-top: 10px;"></p>
+        </form>
+    </section>
+  </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const profileForm = document.getElementById('profileForm');
+        const settingsForm = document.getElementById('settingsForm');
+        const themeColorInput = document.getElementById('themeColor');
+        const colorPreview = document.getElementById('color-preview');
+        const profileMessage = document.getElementById('profileMessage');
+        const settingsMessage = document.getElementById('settingsMessage');
+        const mainHeader = document.querySelector('header');
+        function loadProfileData() {
+            const profileData = Cluster0.getItem('userProfileData');
+            if (profileData) {
+                const data = JSON.parse(profileData);
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('bio').value = data.bio || '';
+            }
+        }
+
+        function loadSettings() {
+            const settingsData = Cluster0.getItem('userSettings');
+            if (settingsData) {
+                const settings = JSON.parse(settingsData);
+                document.getElementById('themeColor').value = settings.themeColor || '#5cb85c';
+                document.getElementById('theme').value = settings.theme || 'light';
+                applySettings(settings); 
+            }
+        }
+
+        function applySettings(settings) {
+            mainHeader.style.backgroundColor = settings.themeColor;
+            
+            colorPreview.style.backgroundColor = settings.themeColor;
+            if (settings.theme === 'dark') {
+                document.body.style.backgroundColor = '#222';
+                document.body.style.color = '#eee';
+            } else {
+                document.body.style.backgroundColor = 'white';
+                document.body.style.color = '#333';
+            }
+        }
+
+      
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                bio: document.getElementById('bio').value
+            };
+            
+            
+            Cluster0.setItem('userProfileData', JSON.stringify(data));
+            
+            profileMessage.textContent = 'Profile details saved successfully!';
+            setTimeout(() => profileMessage.textContent = '', 3000); // Clear message after 3 seconds
+        });
+
+       
+        settingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const settings = {
+                themeColor: themeColorInput.value,
+                theme: document.getElementById('theme').value
+            };
+            
+            
+            Cluster0.setItem('userSettings', JSON.stringify(settings));
+            
+            applySettings(settings);
+
+            settingsMessage.textContent = 'Settings saved and applied successfully!';
+            setTimeout(() => settingsMessage.textContent = '', 3000); s
+        });
+        
+       
+        themeColorInput.addEventListener('input', (e) => {
+            colorPreview.style.backgroundColor = e.target.value;
+        });
+
+        loadProfileData();
+        loadSettings();
+    });
+</script>
+</body>
+</html>
